@@ -51,13 +51,27 @@ class MainActivity : AppCompatActivity() {
     private var lemonTree = LemonTree()
     private var lemonImage: ImageView? = null
 
-//    private var captionResources: HashMap<String, String> = hashMapOf (
-//        SELECT to resources.getString(R.string.lemon_select),
-//        SQUEEZE to resources.getString(R.string.lemon_squeeze),
-//        DRINK to resources.getString(R.string.lemon_drink),
-//        RESTART to resources.getString(R.string.lemon_empty_glass)
-//    )
+    private var captionsRepo: HashMap<String, String> = HashMap<String, String> ()
+    private var descriptionsRepo: HashMap<String, String> = HashMap<String, String> ()
+    private var drawablesRepo: HashMap<String, Int> = HashMap<String, Int> ()
 
+    /**
+     * Initializes our images and captions repositories,
+     */
+    fun initRepositories()  {
+        captionsRepo.put(SELECT, resources.getString(R.string.lemon_select))
+        captionsRepo.put(SQUEEZE, resources.getString(R.string.lemon_squeeze))
+        captionsRepo.put(DRINK, resources.getString(R.string.lemon_drink))
+        captionsRepo.put(RESTART, resources.getString(R.string.lemon_empty_glass))
+        descriptionsRepo.put(SELECT, resources.getString(R.string.description_select))
+        descriptionsRepo.put(SQUEEZE, resources.getString(R.string.description_squeeze))
+        descriptionsRepo.put(DRINK, resources.getString(R.string.description_drink))
+        descriptionsRepo.put(RESTART, resources.getString(R.string.description_empty))
+        drawablesRepo.put(SELECT, R.drawable.lemon_tree.toInt())
+        drawablesRepo.put(SQUEEZE, R.drawable.lemon_squeeze.toInt())
+        drawablesRepo.put(DRINK, R.drawable.lemon_drink.toInt())
+        drawablesRepo.put(RESTART, R.drawable.lemon_restart.toInt())
+    } //.
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,6 +85,7 @@ class MainActivity : AppCompatActivity() {
         }
         // === END IF STATEMENT ===
 
+        initRepositories()
         lemonImage = findViewById(R.id.image_lemon_state)
         setViewElements()
         lemonImage!!.setOnClickListener {
@@ -154,26 +169,24 @@ class MainActivity : AppCompatActivity() {
         //  the string resources file. The strings are named to match the state
         when(lemonadeState) {
             SELECT -> {
-                textAction.text = resources.getString(R.string.lemon_select)
-//                textAction.text = captionResources[SELECT]
-                textAction.contentDescription = resources.getString(R.string.description_select)
-                lemonImage?.setImageResource(R.drawable.lemon_tree)
+                textAction.text = captionsRepo.get(SELECT)
+                textAction.contentDescription = descriptionsRepo.get(SELECT)
+                lemonImage?.setImageResource(drawablesRepo.get(SELECT) as Int)
             }
             SQUEEZE -> {
-                textAction.text = resources.getString(R.string.lemon_squeeze)
-//                textAction.text = captionResources[SQUEEZE]
-                textAction.contentDescription = resources.getString(R.string.description_squeeze)
-                lemonImage?.setImageResource(R.drawable.lemon_squeeze)
+                textAction.text = captionsRepo.get(SQUEEZE)
+                textAction.contentDescription = descriptionsRepo.get(SQUEEZE)
+                lemonImage?.setImageResource(drawablesRepo.get(SQUEEZE) as Int)
             }
             DRINK -> {
-                textAction.text = resources.getString(R.string.lemon_drink)
-                textAction.contentDescription = resources.getString(R.string.description_drink)
-                lemonImage?.setImageResource(R.drawable.lemon_drink)
+                textAction.text = captionsRepo.get(DRINK)
+                textAction.contentDescription = descriptionsRepo.get(DRINK)
+                lemonImage?.setImageResource(drawablesRepo.get(DRINK) as Int)
             }
             RESTART -> {
-                textAction.text = resources.getString(R.string.lemon_empty_glass)
-                textAction.contentDescription = resources.getString(R.string.description_empty)
-                lemonImage?.setImageResource(R.drawable.lemon_restart)
+                textAction.text = captionsRepo.get(RESTART)
+                textAction.contentDescription = descriptionsRepo.get(RESTART)
+                lemonImage?.setImageResource(drawablesRepo.get(RESTART) as Int)
             }
         }
         // TODO: Additionally, for each state, the lemonImage should be set to the corresponding
